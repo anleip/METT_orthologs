@@ -44,7 +44,8 @@ blastp_strict_35_ordered = blastp_strict_35.merge(bu_annotation,on='bu_Protein_a
 blastp_strict_50_ordered = blastp_strict_50.merge(bu_annotation,on='bu_Protein_accession').merge(pv_annotation,on='pv_Protein_accession')
 blastp_strict_70_ordered = blastp_strict_70.merge(bu_annotation,on='bu_Protein_accession').merge(pv_annotation,on='pv_Protein_accession')
 blastp_strict_90_ordered = blastp_strict_90.merge(bu_annotation,on='bu_Protein_accession').merge(pv_annotation,on='pv_Protein_accession')
-
+# %%
+blastp_loose_ordered.to_csv("output/blastp_ordered.csv",index=False)
 # %%
 print(blastp_loose_ordered)
 print(blastp_strict_ordered)
@@ -70,7 +71,7 @@ plt.show()
 
 # %%
 # plot function
-def dot_plot(x,y,col,title):
+def dot_plot(x,y,col,pident):
     plt.style.use('dark_background')
     plt.figure(figsize=(7,7))
     sc = plt.scatter(
@@ -82,26 +83,27 @@ def dot_plot(x,y,col,title):
     )
     plt.xlabel("P. vulgatus protein order")
     plt.ylabel("B. uniformis protein order")
-    plt.title(title)
+    plt.title(f"p identity > {pident}%")
     cbar = plt.colorbar(sc)
     cbar.set_label("-log10(E-value)")
+    plt.savefig(f"output/BLASTp_dot_plot_pident_{pident}.png")
     plt.show()
 # %%
 dot_plot(blastp_strict_35_ordered['pv_order'],
     blastp_strict_35_ordered['bu_order'],
-    blastp_strict_35_ordered["logE"], "p identity >35%")
+    blastp_strict_35_ordered["logE"], 35)
 # %%
 dot_plot(blastp_strict_50_ordered['pv_order'],
     blastp_strict_50_ordered['bu_order'],
-    blastp_strict_50_ordered["logE"], "p identity >50%")
+    blastp_strict_50_ordered["logE"], 50)
 # %%
 dot_plot(blastp_strict_70_ordered['pv_order'],
     blastp_strict_70_ordered['bu_order'],
-    blastp_strict_70_ordered["logE"], "p identity >70%")
+    blastp_strict_70_ordered["logE"], 70)
 # %%
 dot_plot(blastp_strict_90_ordered['pv_order'],
     blastp_strict_90_ordered['bu_order'],
-    blastp_strict_90_ordered["logE"], "p identity >90%")
+    blastp_strict_90_ordered["logE"], 90)
 # %%
 #
 #

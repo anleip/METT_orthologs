@@ -28,14 +28,6 @@ print(blastp_r_strict)
 # %%
 print(blastp_r)
 # %%
-names = blastp_strict.merge(blastp_r_strict,left_on=['qseqid','sseqid'],right_on=['r_sseqid','r_qseqid'],validate="1:1")
-# %%
-print(names)
-# %%
-reciprocal = names[['qseqid','sseqid']].copy()
-# %%
-print(reciprocal)
-# %%
 print(len(blastp_strict))
 # %%
 print(len(blastp_r_strict))
@@ -58,14 +50,15 @@ for i, row in blastp_strict.iterrows():
 for j, row in blastp_r_strict.iterrows():
     tokens_r.append([row['r_sseqid'],row['r_qseqid']])
 # %%
-intersect_q = []; intersect_s = []
+intersect_pv = []; intersect_bu = []
 for i, t in enumerate(tokens):
     if t in tokens_r:
         intersect_q.append(blastp_strict['qseqid'].iloc[i])
         intersect_s.append(blastp_strict['sseqid'].iloc[i])
 
 # %%
-print(len(intersect_q))
+print(len(intersect_pv))
+print(intersect_pv)
 # %%
 # make interseting df!
 #interstct_df = pd.DataFrame(data=[intersect_q,intersect_s],columns=['pv_Protein_accession','bu_Protein_accession'])
