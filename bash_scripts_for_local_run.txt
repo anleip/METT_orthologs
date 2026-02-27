@@ -1,0 +1,23 @@
+# Current directory is /nfs/research/jlees/anlei/analysis/METT_orthologs
+
+# BLAST genomes for ACT input
+
+### Make nucleotide db
+makeblastdb -in GCF_044361425.1_ASM4436142v1_genomic.fna -dbtype nucl -out GCF_044361425.1_ASM4436142v1_db
+
+### I have reorganised the loose db files into one folder
+blastn -query GCF_000012825.1_ASM1282v1_genomic.fna -db GCF_044361425.1_ASM4436142v1_db/GCF_044361425.1_ASM4436142v1_db -outfmt 6 -out pv_v_bu_blast_default.crunch
+
+
+# BLAST protein
+
+### Make protein database
+makeblastdb -in GCF_000012825.1_proteinCDS/GCF_000012825.1.faa -dbtype prot -out GCF_000012825.1_proteinCDS_db
+
+### I have reorganised the loose db files into one folder
+blastp -query GCF_044361425.1_proteinCDS/GCF_044361425.1.faa -db GCF_000012825.1_proteinCDS_db/GCF_000012825.1_proteinCDS_db -outfmt 6 -out bu_v_pv_blast_protein.crunch
+
+
+
+# ACT visualisation example with annotation
+act GCF_000012825.1.prokka.gff pv_v_bu_blast_length100.crunch GCF_044361425.1.prokka.gff
